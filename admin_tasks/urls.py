@@ -1,20 +1,21 @@
 # admin_tasks/urls.py
 
 from django.urls import path
-from .views import (
-    ShapeListCreateAPIView,
-    ShapeDetailAPIView,
-    CategoryListCreateAPIView,
-    CategoryDetailAPIView,
-    SizeChoicesView
-)
+from . import views
 
 urlpatterns = [
-    path('shapes/', ShapeListCreateAPIView.as_view(), name='shape-list-create'),
-    path('shapes/<int:pk>/', ShapeDetailAPIView.as_view(), name='shape-detail'),
-    path('categories/', CategoryListCreateAPIView.as_view(),
+    path('shapes/', views.ShapeListCreateAPIView.as_view(),
+         name='shape-list-create'),
+    path('shapes/<int:pk>/', views.ShapeDetailAPIView.as_view(), name='shape-detail'),
+    path('categories/', views.CategoryListCreateAPIView.as_view(),
          name='category-list-create'),
-    path('categories/<int:pk>/', CategoryDetailAPIView.as_view(),
+    path('categories/<int:pk>/', views.CategoryDetailAPIView.as_view(),
          name='category-detail'),
-    path('sizes/', SizeChoicesView.as_view(), name='size-choices'),
+    path('sizes/', views.SizeListCreateAPIView.as_view(), name='size-list'),
+    path('sizes/<int:pk>/', views.SizeDetailAPIView.as_view(), name='size-detail'),
+    path('facings/', views.FacingListCreateAPIView.as_view(), name='facing-list'),
+    path('facings/<int:pk>/', views.FacingDetailAPIView.as_view(),
+         name='facing-detail'),
+    path('size-options/', views.SizeOptionsView.as_view(), name='size-options'),
+    path('facing-options/', views.FacingOptionsView.as_view(), name='facing-options'),
 ]

@@ -17,13 +17,25 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
 
 
-class Shape(models.Model):
-    SIZE_CHOICES = [
-        ('SMALL', 'Up to 15 cents'),
-        ('MEDIUM', '15-30 cents'),
-        ('LARGE', 'Above 30 cents'),
-    ]
+class Size(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
+
+
+class Facing(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Shape(models.Model):
     name = models.CharField(
         max_length=100,
         help_text="Name or identifier for the shape",
@@ -35,11 +47,12 @@ class Shape(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     file = models.ForeignKey(File, on_delete=models.CASCADE)
     is_sold = models.BooleanField(default=False)
-    facing = models.CharField(max_length=100, default='north')
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='shapes')
-    size = models.CharField(
-        max_length=10, choices=SIZE_CHOICES, default='SMALL')
+    facing = models.ForeignKey(
+        Facing, on_delete=models.SET_NULL, null=True, blank=True)
+    size = models.ForeignKey(
+        Size, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
